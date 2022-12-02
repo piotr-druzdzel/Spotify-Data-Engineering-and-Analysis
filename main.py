@@ -1,5 +1,5 @@
 # Spotify token
-# BQDwDCa79PuhtU2BVMl_dbYSm4-A_kk6-dzFoxIbqiR8KEsKlYWaEhiLnDcD4g69W3v9mjom44VFqZBsZYsJDvxSdRg8e9wJCAaNtcPhgSEElTUhmIglDquMFeMBXxl96fJbsmZtIghFbwIczVAWTbdWPa9ZtEWdVotH7h0XPwnzfikqnNj4ww
+# 
 
 import sqlalchemy
 import pandas as pd
@@ -17,4 +17,15 @@ load_dotenv()
 
 DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
 USER_ID = os.getenv("SPOTIFY_ID") #spotify ID
+TOKEN = os.getenv("SPOTIFY_TOKEN")
 
+if __name__ == "__main__":
+
+    # Extract part of the ETL process
+
+    # Headers for the Spotify API
+    headers {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+        "Authorization" : "Bearer {token}".format(token=TOKEN)
+    }
