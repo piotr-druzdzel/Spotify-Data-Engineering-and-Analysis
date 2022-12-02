@@ -9,3 +9,12 @@ import json
 from datetime import datetime
 import datetime
 import sqlite3
+import os
+from dotenv import load_dotenv
+
+# load_dotenv will look for a .env file and if it finds one, it will load the environment variables from it
+load_dotenv()
+
+DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
+USER_ID = os.getenv("SPOTIFY_ID") #spotify ID
+
