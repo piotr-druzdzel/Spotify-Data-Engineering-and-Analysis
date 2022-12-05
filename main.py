@@ -1,4 +1,4 @@
-#import libraries
+# import libraries
 import sqlalchemy
 import pandas as pd
 from sqlalchemy.orm import sessionmaker
@@ -14,8 +14,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
-USER_ID = os.getenv("SPOTIFY_ID") #spotify ID
-TOKEN = os.getenv("SPOTIFY_TOKEN")
+USER_ID = os.getenv("SPOTIFY_ID")  # Spotify ID
+TOKEN = os.getenv("SPOTIFY_TOKEN") # Spotify Token (needs to be re-generated when expired)
 
 if __name__ == "__main__":
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=10&after=1484811043508" -H 
     # "Accept: application/json" -H 
     # "Content-Type: application/json" -H 
-    # "Authorization: Bearer BQA1r6F641flx3nhF2Qi2PnP-W0-3OX9Kr6hUvsNa0D8wy43-h7dE6hCNcTe2mE8G863GSOKwJxuR5QbUx_hXgL9AQAynrEVYF3MpqPD4YN2s0fvgxKw-iOTmUFbv_zXOtCysqymlb71PtqM0-LtuC246cnOW44xns28Z89Fi9KFJQaI4YdOIg"
+    # "Authorization: Bearer TOKEN"
 
     # Headers for the Spotify API
     headers = {
