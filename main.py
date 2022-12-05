@@ -13,6 +13,9 @@ from dotenv import load_dotenv
 # load_dotenv will look for a .env file and if it finds one, it will load the environment variables from it
 load_dotenv()
 
+# Spotify TOKEN generation:
+# https://developer.spotify.com/console/get-recently-played/
+
 DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
 USER_ID = os.getenv("SPOTIFY_ID")  # Spotify ID
 TOKEN = os.getenv("SPOTIFY_TOKEN") # Spotify Token (needs to be re-generated when expired)
@@ -42,6 +45,12 @@ if __name__ == "__main__":
     # Download all songs you've listened to "after yesterday", which means in the last 24 hours      
     r = requests.get("https://api.spotify.com/v1/me/player/recently-played?after={time}".format(time=yesterday_unix_timestamp), headers = headers)
 
+    if r.status_code == 200:
+        print(f"Requests' status OK, code: {r.status_code}.\n")
+    else:
+        print("Problem with Requests")
+
+
     data = r.json()
 
     with open('data.json', 'w', encoding='utf-8') as f:
@@ -53,11 +62,11 @@ if __name__ == "__main__":
     timestamps = []
 
     # Print songs
-    for song in data["items"]:
-        print(song["track"]["album"]["artists"][0]["name"], "-", song["track"]["name"])
-        print(song["played_at"])
-        print(song["played_at"][0:10])
-        print()
+    # for song in data["items"]:
+    #     print(song["track"]["album"]["artists"][0]["name"], "-", song["track"]["name"])
+    #     print(song["played_at"])
+    #     print(song["played_at"][0:10])
+    #     print()
 
     # Extracting only the relevant bits of data from the json object      
     for song in data["items"]:
