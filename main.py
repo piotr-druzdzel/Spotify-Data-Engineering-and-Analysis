@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # Extract part of the ETL process
 
     # Structure
-    # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=10&after=1484811043508" -H 
+    # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=10&after={TIME}" -H 
     # "Accept: application/json" -H 
     # "Content-Type: application/json" -H 
     # "Authorization: Bearer TOKEN"
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     # Convert time to Unix timestamp in miliseconds 
     today                       = datetime.datetime.now()
-    yesterday                   = today - datetime.timedelta(days=1)
+    yesterday                   = today - datetime.timedelta(days=30)
     yesterday_unix_timestamp    = int(yesterday.timestamp()) * 1000
 
     # Download all songs you've listened to "after yesterday", which means in the last 24 hours      
@@ -50,8 +50,37 @@ if __name__ == "__main__":
     else:
         print("Problem with Requests")
 
-
     data = r.json()
+
+    # Data checks
+    def check_if_valid_data(df: pd.DataFrame) -> bool:
+
+        # Check if DataFrame is empty
+        if df.empty:
+            print("No songs downloaded. Finishing execution.")
+            return False
+
+        # Primary Key Check
+        if pd.Series(df["played_at"]).is_unique:
+            pass
+        else:
+            raise Exception("Primary key check is violated")
+
+        # Check fo null values
+        if df.isnull().values.any():
+            raise Exception("Null value found")
+
+        # Check that all timestamps are of yesterday's date
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        yesterday = yesterday.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        timestamps = df["timestamp"].tolist()
+        for timestamp in timestamps:
+            if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday:
+                raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
+
+        return True
+
 
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
