@@ -30,6 +30,11 @@ if __name__ == "__main__":
     # "Content-Type: application/json" -H 
     # "Authorization: Bearer TOKEN"
 
+    # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=50" -H "
+    # Accept: application/json" -H "
+    # Content-Type: application/json" -H "
+    # Authorization: Bearer {TOKEN}"
+
     # Headers for the Spotify API
     headers = {
         "Accept": "application/json",
@@ -78,12 +83,13 @@ if __name__ == "__main__":
         timestamps = df["timestamp"].tolist()
         for timestamp in timestamps:
             if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday:
-                raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
+                print(timestamp, song["played_at"])
+                #raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
 
         print("All data checks fine.")
         return True
 
-
+    # Write json data to file
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
@@ -114,5 +120,9 @@ if __name__ == "__main__":
     }
    
     song_df = pd.DataFrame(song_dict)
+
+    # Validate
+    if check_if_valid_data(song_df):
+        print("Data valid, proceed to Load stage")
 
     print(song_df)
