@@ -24,8 +24,8 @@ if __name__ == "__main__":
 
     # Extract part of the ETL process
 
-    # Structure
-    # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=10&after={TIME}" -H 
+    # Request structure
+    # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=50&after={TIME}" -H 
     # "Accept: application/json" -H 
     # "Content-Type: application/json" -H 
     # "Authorization: Bearer TOKEN"
@@ -43,8 +43,9 @@ if __name__ == "__main__":
     yesterday_unix_timestamp    = int(yesterday.timestamp()) * 1000
 
     # Download all songs you've listened to "after yesterday", which means in the last 24 hours      
-    r = requests.get("https://api.spotify.com/v1/me/player/recently-played?after={time}".format(time=yesterday_unix_timestamp), headers = headers)
+    r = requests.get("https://api.spotify.com/v1/me/player/recently-played?limit=50&after={time}".format(time=yesterday_unix_timestamp), headers = headers)
 
+    # HTTP status code
     if r.status_code == 200:
         print(f"Requests' status OK, code: {r.status_code}.\n")
     else:
