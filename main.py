@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     # Convert time to Unix timestamp in miliseconds 
     today                       = datetime.datetime.now()
-    yesterday                   = today - datetime.timedelta(days=30)
+    yesterday                   = today - datetime.timedelta(days=1)
     yesterday_unix_timestamp    = int(yesterday.timestamp()) * 1000
 
     # Download all songs you've listened to "after yesterday", which means in the last 24 hours      
@@ -79,6 +79,7 @@ if __name__ == "__main__":
             if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday:
                 raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
 
+        print("All data checks fine.")
         return True
 
 
