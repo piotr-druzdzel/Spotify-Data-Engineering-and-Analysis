@@ -86,7 +86,6 @@ if __name__ == "__main__":
                 print(timestamp, song["played_at"])
                 #raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
 
-        print("All data checks fine.")
         return True
 
     # Write json data to file
