@@ -31,9 +31,7 @@ if __name__ == "__main__":
     # "Authorization: Bearer TOKEN"
 
     # curl -X "GET" "https://api.spotify.com/v1/me/player/recently-played?limit=50" -H "
-    # Accept: application/json" -H "
-    # Content-Type: application/json" -H "
-    # Authorization: Bearer {TOKEN}"
+    # (...)
 
     # Headers for the Spotify API
     headers = {
@@ -129,5 +127,29 @@ if __name__ == "__main__":
     # Load
 
     engine = sqlalchemy.create_engine(DATABASE_LOCATION)
-    conn = sqlite3.connect('my_played_tracks.sqlite')
-    cursor = conn.cursor()
+    connection = sqlite3.connect('my_played_tracks.sqlite')
+    cursor = connection.cursor()
+
+    # SQL query (could be also achieved from sqlalchemy level)
+    # Primary key on 'played_at' (always unique)
+    sql_query = """
+    CREATE TABLE IF NOT EXISTS my_played_tracks(
+        song_name VARCHAR(200),
+        artist_name VARCHAR(200),
+        played_at VARCHAR(200),
+        timestamp VARCHAR(200),
+        CONSTRAINT primary_key_constraint PRIMARY KEY (played_at)
+    )
+    """
+
+    cursor.execute(sql_query)
+    print("Opened database successfully")
+
+    # instert data directly from sql to the database
+    try:
+        song_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
+    except:
+        print("Data already exists in the database")
+
+    connection.close()
+    print("Closed database successfully")
