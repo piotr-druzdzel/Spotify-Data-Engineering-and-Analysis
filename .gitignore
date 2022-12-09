@@ -159,7 +159,7 @@ cython_debug/
 QuickCheck.py
 
 # My Spotify data
-MyData
+MyAccountData
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
