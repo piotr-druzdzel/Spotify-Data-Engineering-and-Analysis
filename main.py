@@ -125,3 +125,9 @@ if __name__ == "__main__":
         print("Data valid, proceed to Load stage")
 
     print(song_df)
+
+    # Load
+
+    engine = sqlalchemy.create_engine(DATABASE_LOCATION)
+    conn = sqlite3.connect('my_played_tracks.sqlite')
+    cursor = conn.cursor()
