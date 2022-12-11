@@ -95,13 +95,6 @@ if __name__ == "__main__":
     played_at_list = []
     timestamps = []
 
-    # Print songs
-    # for song in data["items"]:
-    #     print(song["track"]["album"]["artists"][0]["name"], "-", song["track"]["name"])
-    #     print(song["played_at"])
-    #     print(song["played_at"][0:10])
-    #     print()
-
     # Extracting only the relevant bits of data from the json object      
     for song in data["items"]:
         song_names.append(song["track"]["name"])
@@ -122,7 +115,9 @@ if __name__ == "__main__":
     if check_if_valid_data(song_df):
         print("Data valid, proceed to Load stage")
 
+    print("Recent songs:")
     print(song_df)
+    print()
 
     # Load
 
@@ -149,7 +144,10 @@ if __name__ == "__main__":
     try:
         song_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
     except:
-        print("Data already exists in the database")
+        print("Data already exists in the database. \n")
+
+    print(pd.read_sql_query("SELECT * FROM my_played_tracks", connection))
 
     connection.close()
     print("Closed database successfully")
+
