@@ -48,11 +48,11 @@ if __name__ == "__main__":
     # Download all songs you've listened to "after yesterday", which means in the last 24 hours      
     r = requests.get("https://api.spotify.com/v1/me/player/recently-played?limit=50&after={time}".format(time=yesterday_unix_timestamp), headers = headers)
 
-    # HTTP status code
+    # Spotify API, HTTP status code
     if r.status_code == 200:
-        print(f"Requests' status OK, code: {r.status_code}.\n")
+        print(f"Spotify API Token up-to-date. Requests' status OK, code: {r.status_code}.\n")
     else:
-        print("Problem with Requests")
+        print("Problem with Requests. Potential problem with Spotify API Token.")
 
     data = r.json()
 
@@ -68,21 +68,21 @@ if __name__ == "__main__":
         if pd.Series(df["played_at"]).is_unique:
             pass
         else:
-            raise Exception("Primary key check is violated")
+            raise Exception("Primary key check is violated.")
 
         # Check fo null values
         if df.isnull().values.any():
-            raise Exception("Null value found")
+            raise Exception("Null value found!")
 
-        # Check that all timestamps are of yesterday's date
-        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
-        yesterday = yesterday.replace(hour=0, minute=0, second=0, microsecond=0)
+        # # Check that all timestamps are of yesterday's date
+        # yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        # yesterday = yesterday.replace(hour=0, minute=0, second=0, microsecond=0)
 
-        timestamps = df["timestamp"].tolist()
-        for timestamp in timestamps:
-            if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday:
-                print(timestamp, song["played_at"])
-                #raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
+        # timestamps = df["timestamp"].tolist()
+        # for timestamp in timestamps:
+        #     if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday:
+        #         print(timestamp, song["played_at"])
+        #         #raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
 
         return True
 
@@ -109,11 +109,12 @@ if __name__ == "__main__":
         "timestamp" : timestamps
     }
    
+   # Create song DataFrame
     song_df = pd.DataFrame(song_dict)
 
     # Validate
     if check_if_valid_data(song_df):
-        print("Data valid, proceed to Load stage")
+        print("Data valid, proceed to Load stage.")
 
     print("Recent songs:")
     print(song_df)
@@ -140,12 +141,13 @@ if __name__ == "__main__":
     cursor.execute(sql_query)
     print("Opened database successfully")
 
-    # instert data directly from sql to the database
+    # Instert data directly from sql to the database
     try:
         song_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
     except:
         print("Data already exists in the database. \n")
 
+    # print current database overview
     print(pd.read_sql_query("SELECT * FROM my_played_tracks", connection))
 
     connection.close()
