@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     # Spotify API, HTTP status code
     if r.status_code == 200:
-        print(f"Spotify API Token up-to-date. Request status code: {r.status_code}.\n")
+        print(f"Spotify API Token up-to-date. Request status code: {r.status_code}. \n")
     else:
         print("Problem with Requests. Potential problem with Spotify API Token. \n")
 
