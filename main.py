@@ -50,9 +50,9 @@ if __name__ == "__main__":
 
     # Spotify API, HTTP status code
     if r.status_code == 200:
-        print(f"Spotify API Token up-to-date. Requests' status OK, code: {r.status_code}.\n")
+        print(f"Spotify API Token up-to-date. Request status code: {r.status_code}.\n")
     else:
-        print("Problem with Requests. Potential problem with Spotify API Token.")
+        print("Problem with Requests. Potential problem with Spotify API Token. \n")
 
     data = r.json()
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     if check_if_valid_data(song_df):
         print("Data valid, proceed to Load stage.")
 
-    print("Recent songs:")
+    print("Recent songs (0-50):")
     print(song_df)
     print()
 
