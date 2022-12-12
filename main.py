@@ -74,15 +74,18 @@ if __name__ == "__main__":
         if df.isnull().values.any():
             raise Exception("Null value found!")
 
-        # # Check that all timestamps are of yesterday's date
-        # yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
-        # yesterday = yesterday.replace(hour=0, minute=0, second=0, microsecond=0)
+        # Check that all timestamps are of yesterday's date
+        today = datetime.datetime.now()
+        today = today.replace(hour=0, minute=0, second=0, microsecond=0)
 
-        # timestamps = df["timestamp"].tolist()
-        # for timestamp in timestamps:
-        #     if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday:
-        #         print(timestamp, song["played_at"])
-        #         #raise Exception("At least one of the returned songs does not have a yesterday's timestamp")
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        yesterday = yesterday.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        timestamps = df["timestamp"].tolist()
+        for timestamp in timestamps:
+            if datetime.datetime.strptime(timestamp, '%Y-%m-%d') != yesterday and datetime.datetime.strptime(timestamp, '%Y-%m-%d') != today:
+                print(timestamp, song["played_at"])
+                raise Exception("At least one of the returned songs is not from the last 24h.")
 
         return True
 
