@@ -14,3 +14,10 @@ default_args = {
     'retry_delay': timedelta(minutes=1)
 }
 
+dag = DAG(
+    'spotify_dag',
+    default_args=default_args,
+    description='Our first DAG with ETL process!',
+    schedule_interval=timedelta(days=1),
+)
+
