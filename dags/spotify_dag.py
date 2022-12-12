@@ -21,3 +21,13 @@ dag = DAG(
     schedule_interval=timedelta(days=1),
 )
 
+def just_a_function():
+    print("Check :)")
+
+run_etl = PythonOperator(
+    task_id='whole_spotify_etl',
+    python_callable=run_spotify_etl,
+    dag=dag,
+)
+
+run_etl
