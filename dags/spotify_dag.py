@@ -9,7 +9,7 @@ from spotify_etl import run_spotify_etl
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2022, 12, 12),
+    'start_date': datetime.datetime(2022, 12, 12),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
