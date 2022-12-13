@@ -70,11 +70,11 @@ if __name__ == "__main__":
         else:
             raise Exception("Primary key check is violated.")
 
-        # Check fo null values
+        # Check for null values
         if df.isnull().values.any():
             raise Exception("Null value found!")
 
-        # Check that all timestamps are of yesterday's date
+        # Check if all timestamps are of yesterday's or today's date
         today = datetime.datetime.now()
         today = today.replace(hour=0, minute=0, second=0, microsecond=0)
 
