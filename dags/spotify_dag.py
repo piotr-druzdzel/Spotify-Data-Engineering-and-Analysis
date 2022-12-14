@@ -9,8 +9,8 @@ from spotify_etl import run_spotify_etl
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime.datetime(2022, 12, 12),
-    'email': ['airflow@example.com'],
+    'start_date': datetime.datetime(2022, 12, 13),
+    'email': ['piotr.druzdzel@gmail.com'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -20,12 +20,12 @@ default_args = {
 dag = DAG(
     'spotify_dag',
     default_args=default_args,
-    description='Our first DAG with ETL process!',
+    description='My DAG with ETL process!',
     schedule_interval=timedelta(days=1),
 )
 
 def just_a_function():
-    print("Check :)")
+    print("Check.")
 
 run_etl = PythonOperator(
     task_id='whole_spotify_etl',
