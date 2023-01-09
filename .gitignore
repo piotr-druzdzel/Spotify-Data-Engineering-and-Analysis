@@ -161,6 +161,7 @@ QuickCheck.py
 # My Spotify data
 MyAccountData
 MyHistoricData
+previewHistoricData.ipynb
 
 # .DS_Store
 .DS_Store
